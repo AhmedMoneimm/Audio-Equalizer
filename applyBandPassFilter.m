@@ -1,4 +1,4 @@
-function filtered_wave = applyBandPassFilter(Fs, input_wave, b, a, gain, f1, f2)
+function filtered_wave = applyBandPassFilter(Fs, input_wave, b, a, gain, f_low, f_high)
     filteredSignal = filter(b, a, input_wave);
     filteredSignalG = power(10, gain/20) * filteredSignal;
     input_wave = filteredSignalG;
@@ -11,14 +11,14 @@ function filtered_wave = applyBandPassFilter(Fs, input_wave, b, a, gain, f1, f2)
     title('Original Signal in Frequency Domain');
     subplot(3, 2, 3)
     plot(real(filteredSignal));
-    title(['BandPass Signal Time Domain [' num2str(f1) ' - ' num2str(f2) ' Hz]']);
+    title(['BandPass Signal Time Domain [' num2str(f_low) ' - ' num2str(f_high) ' Hz]']);
     subplot(3, 2, 4)
     plot(real(fft(filteredSignal)));
-    title(['BandPass Filtered signal in Frequency Domain [' num2str(f1) ' - ' num2str(f2) ' Hz]']);
+    title(['BandPass signal in Frequency Domain [' num2str(f_low) ' - ' num2str(f_high) ' Hz]']);
     subplot(3, 2, 5)
     plot(real(filteredSignalG));
-    title(['BandPass Filtered Signal Time Domain with gain [' num2str(f1) ' - ' num2str(f2) ' Hz]']);
+    title(['BandPass Filtered Signal Time Domain with gain [' num2str(f_low) ' - ' num2str(f_high) ' Hz]']);
     subplot(3, 2, 6)
     plot(real(fft(filteredSignalG)));
-    title(['BandPass Filtered Signal in Frequency Domain with gain [' num2str(f1) ' - ' num2str(f2) ' Hz]']);
+    title(['BandPass Filtered Signal in Frequency Domain with gain [' num2str(f_low) ' - ' num2str(f_high) ' Hz]']);
 end
