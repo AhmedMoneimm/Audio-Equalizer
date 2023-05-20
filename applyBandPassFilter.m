@@ -1,4 +1,4 @@
-function filtered_wave = applyBandPassFilter(Fs, input_wave, b, a, gain, f_low, f_high)
+function filtered_wave = applyBandPassFilter(input_wave, b, a, gain, f_low, f_high)
     filteredSignal = filter(b, a, input_wave);
     filteredSignalG = power(10, gain/20) * filteredSignal;
     input_wave = filteredSignalG;
