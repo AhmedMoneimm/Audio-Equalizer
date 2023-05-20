@@ -1,0 +1,8 @@
+clc
+filename = 'audio.wav';
+[x, fs] = audioread(filename);
+freqLow = [0, 170, 300, 610, 1005, 3000, 6000, 12000, 14000];
+freqHigh = [170, 300, 610, 1005, 3000, 6000, 12000, 14000, 20000];
+[a, b] = bandPassFilter(fs,170,500,50,0);
+y = filter(b,a,x);
+

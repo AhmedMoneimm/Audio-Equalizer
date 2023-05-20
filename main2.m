@@ -1,3 +1,5 @@
+clc
+
 filename = input('Enter the wave file name: ', 's'); % audio.wav
 
 frequencyGains = zeros(1, size(frequencyBands, 1));
@@ -6,7 +8,7 @@ for i = 1:size(frequencyBands, 1)
     frequencyGains(i) = input(sprintf('Enter the gain for frequency band %d: ', i));
 end
 
-filterType = input('Enter the type of filters used (FIR-IIR): ', 's');
+filterType = menu('Choose filter ','IIR','FIR');
 outputSampleRate = input('Enter the output sample rate: ');
 
 frequencyBands = [0 170; 170 310; 310 600; 600 1000; 1000 3000; 3000 6000; 6000 12000; 12000 14000; 14000 16000];
