@@ -1,6 +1,8 @@
+clc
+
 filename = 'audio.wav';
-[input_wave, fs] = audioread(filename);
+[x, fs] = audioread(filename);
 
-filtered_wave = FIR_wave_filter(fs, 171, 310, input_wave);
-
-% add here the condition 
+[a, b] = bandPassFilter(fs,170,500,4,0);
+y = filter(b,a,x);
+freqz(a,b,fs);
