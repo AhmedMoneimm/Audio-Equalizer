@@ -5,12 +5,18 @@ disp('Insert .wav file:');
 file = fullfile(folder, baseName);
 [x, fs] = audioread(file);
 
-choose = menu(strcat('Current FS = ',num2str(fs),'----','Want to change output sampling rate?'),'Yes','No');
+choose = menu(strcat('Current FS = ',num2str(fs),'----','Want to change output sampling rate?'),'Yes','No','Double','half');
 if (choose == 1)
     fs_new = input('Enter the new output sampling rate:');
     x = resample(x, fs_new, fs);
     fs = fs_new;
+elseif(choose == 3)
+    fs = 2*fs;
+elseif(choose == 4)
+    fs = fs/2;
 end
+
+disp(fs);
 
 disp('Insert the gain for each of the following bandwidths in dB:');
 bands = {'FROM 0 TO 170 Hz', 'FROM 170 TO 300 Hz', 'FROM 300 TO 610 Hz', 'FROM 610 TO 1005 Hz', 'FROM 1.005 TO 3 KHz', 'FROM 3 TO 6 KHz', 'FROM 6 TO 12 KHz', 'FROM 12 TO 14 KHz', 'FROM 14 TO 20 KHz'};
