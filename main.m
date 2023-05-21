@@ -13,7 +13,7 @@ if (choose == 1)
 end
 
 disp('Insert the gain for each of the following bandwidths in dB:');
-bands = {'FROM 0 TO 170 Hz', 'FROM 170 TO 310 Hz', 'FROM 310 TO 600 Hz', 'FROM 600 TO 1000 Hz', 'FROM 1 TO 3 KHz', 'FROM 3 TO 6 KHz', 'FROM 6 TO 12 KHz', 'FROM 12 TO 14 KHz', 'FROM 14 TO 16 KHz'};
+bands = {'FROM 0 TO 170 Hz', 'FROM 170 TO 300 Hz', 'FROM 300 TO 610 Hz', 'FROM 610 TO 1005 Hz', 'FROM 1.005 TO 3 KHz', 'FROM 3 TO 6 KHz', 'FROM 6 TO 12 KHz', 'FROM 12 TO 14 KHz', 'FROM 14 TO 20 KHz'};
 gains = zeros(1, 9);
 
 for i = 1:numel(bands)
@@ -30,7 +30,7 @@ freqRanges = {
     [3000, 6000]
     [6000, 12000]
     [12000, 14000]
-    [14000, 16000]
+    [14000, 20000]
 };
 
 filterType = menu('Choose filter', 'IIR', 'FIR');
@@ -45,8 +45,15 @@ for i = 2:9
     f_high = freqRange(2);
     [b, a] = bandPassFilter(fs, f_low, f_high, filterType);
     filtered = filter(b, a, x);
-    after_gain = after_gain + filtered * gains(i);
+    band_gain = power(10, gains(i)/20) * filtered;
+    plotFilteredSignal(x, filtered, band_gain, f_low, f_high)
+    after_gain = after_gain + band_gain;
 end
 
-sound(after_gain, fs);
+% Plot gain and phase response
+plotGainPhaseResponse(after_gain, fs);
 
+% Plot impulse and step response
+plotImpulseStepResponse(b, a, fs);
+
+sound(after_gain, fs);
