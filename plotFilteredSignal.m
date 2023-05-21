@@ -15,7 +15,7 @@ function plotFilteredSignal(input_wave, filtered, band_gain, f_low, f_high)
     
     subplot(3, 2, 4)
     plot(real(fft(filtered)));
-    title(['BandPass Filtered signal in Frequency Domain [' num2str(f_low) ' - ' num2str(f_high) ' Hz]']);
+    title(['BandPass Filtered Signal in Frequency Domain [' num2str(f_low) ' - ' num2str(f_high) ' Hz]']);
     
     subplot(3, 2, 5)
     plot(real(band_gain));
