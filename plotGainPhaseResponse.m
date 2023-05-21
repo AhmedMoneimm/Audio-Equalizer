@@ -1,11 +1,11 @@
 function plotGainPhaseResponse(signal, fs, f_low, f_high)
     % frequency domain
     L = length(signal);
-    f_xaxis = linspace(-fs/2, fs/2, L);
+    f_xaxis = linspace(-0.5, 0.5, L) * fs;
     fmag = abs(fftshift(fft(signal))/fs);
     phase = angle(fftshift(fft(signal)));
 
-    % create folder if it doesn't exist
+    % Create folder if it doesn't exist
     folder = 'GainPhaseResponse';
     if ~exist(folder, 'dir')
         mkdir(folder);
@@ -24,6 +24,6 @@ function plotGainPhaseResponse(signal, fs, f_low, f_high)
     xlabel('Frequency (Hz)');
     ylabel('Phase (radians)');
 
-    % saves the imgs
+    % Save the images
     saveas(gcf, fullfile(folder, ['GainPhaseResponse_' num2str(f_low) '_' num2str(f_high) '.png']));
 end

@@ -39,18 +39,21 @@ for i = 1:9
     freqRange = freqRanges{i};
     f_low = freqRange(1);
     f_high = freqRange(2);
+    filtered = filter(b, a, x);
     
     if i == 1
         [b, a] = lowPassFilter(fs, 170, filterType);
+        after_gain = power(10, gains(1)/20) * filtered;
     else
         [b, a] = bandPassFilter(fs, f_low, f_high, filterType);
     end
 
-    filtered = filter(b, a, x);
     band_gain = power(10, gains(i)/20) * filtered;
-    plotGainPhaseResponse(x, fs, f_low, f_high);
-    %plotFilterCharacteristics(b, a, [f_low, f_high], band_gain, fs, x);
     
+    plotBandpassFilterResponse(b, a, f_low, f_high, fs,filterType);
+    plotFilteredSignal(x, filtered, band_gain, f_low, f_high);
+
+
     after_gain = after_gain + band_gain;
 end
 
