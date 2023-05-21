@@ -46,6 +46,7 @@ for i = 2:9
     [b, a] = bandPassFilter(fs, f_low, f_high, filterType);
     filtered = filter(b, a, x);
     band_gain = power(10, gains(i)/20) * filtered;
+    plotGainPhaseResponse(x, fs, f_low, f_high);
     %plotFilterCharacteristics(b, a, [f_low, f_high], band_gain, fs, x);
     after_gain = after_gain + band_gain;
     
