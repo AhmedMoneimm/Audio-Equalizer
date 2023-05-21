@@ -50,9 +50,9 @@ for i = 1:9
 
     band_gain = power(10, gains(i)/20) * filtered;
     
+    % plot graphs
     plotBandpassFilterResponse(b, a, f_low, f_high, fs,filterType);
     plotFilteredSignal(x, filtered, band_gain, f_low, f_high);
-
 
     after_gain = after_gain + band_gain;
 end
