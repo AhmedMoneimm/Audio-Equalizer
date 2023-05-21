@@ -1,5 +1,11 @@
 function compareSignals(original, composite, fs)
-    % Time Domain
+    % create CompareSignals folder if it's not existed/found
+    folder = 'CompareSignals';
+    if ~exist(folder, 'dir')
+        mkdir(folder);
+    end
+    
+    % time domain
     t = linspace(0, length(original)/fs, length(original));
     figure;
     subplot(2, 2, 1);
@@ -14,7 +20,7 @@ function compareSignals(original, composite, fs)
     xlabel('Time (s)'); ylabel('Amplitude');
     grid on;
 
-    % Frequency Domain
+    % frequency domain
     L = length(original);
     f_xaxis = linspace(-fs/2, fs/2, L);
 
@@ -31,4 +37,7 @@ function compareSignals(original, composite, fs)
     title('Composite Signal in Frequency Domain');
     xlabel('Frequency (Hz)'); ylabel('Magnitude');
     grid on;
+    
+    % save img in the CompareSignals folder
+    saveas(gcf, fullfile(folder, 'CompareSignals.png'));
 end
