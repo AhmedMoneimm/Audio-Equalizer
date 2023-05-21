@@ -35,22 +35,25 @@ freqRanges = {
 
 filterType = menu('Choose filter', 'IIR', 'FIR');
 
-[b, a] = lowPassFilter(fs, 170, filterType);
-filtered = filter(b, a, x);
-after_gain = filtered * gains(1);
-
-for i = 2:9
+for i = 1:9
     freqRange = freqRanges{i};
     f_low = freqRange(1);
     f_high = freqRange(2);
-    [b, a] = bandPassFilter(fs, f_low, f_high, filterType);
+    
+    if i == 1
+        [b, a] = lowPassFilter(fs, 170, filterType);
+    else
+        [b, a] = bandPassFilter(fs, f_low, f_high, filterType);
+    end
+
     filtered = filter(b, a, x);
     band_gain = power(10, gains(i)/20) * filtered;
     plotGainPhaseResponse(x, fs, f_low, f_high);
     %plotFilterCharacteristics(b, a, [f_low, f_high], band_gain, fs, x);
-    after_gain = after_gain + band_gain;
     
+    after_gain = after_gain + band_gain;
 end
+
 
 compareSignals(x, after_gain, fs);
 
