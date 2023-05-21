@@ -48,6 +48,8 @@ for i = 1:9
     
     if i == 1
         [b, a] = lowPassFilter(fs, 170, filterType);
+        after_gain = power(10, gains(1)/20) * filtered;
+
     else
         [b, a] = bandPassFilter(fs, f_low, f_high, filterType);
     end
