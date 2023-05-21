@@ -5,15 +5,15 @@ function plotFilteredSignal(input_wave, filtered, band_gain, f_low, f_high)
         mkdir(folder);
     end
     
-    figure('Position', [0, 0, 1000, 800]);  % Set the figure size
+    figure('Position', [0, 0, 1000, 700]);  % set the figure size
 
     % calculate the center position of the screen
     screen_size = get(groot, 'ScreenSize');
-    center_x = (screen_size(3) - 1000) / 2;  % Adjust the width of the figure if needed
-    center_y = (screen_size(4) - 800) / 2;   % Adjust the height of the figure if needed
+    center_x = (screen_size(3) - 1000) / 2;  % adjust fig width 
+    center_y = (screen_size(4) - 700) / 2;   % adjust fig height
     
     % set the figure position to the center
-    set(gcf, 'Position', [center_x, center_y, 1000, 800]);
+    set(gcf, 'Position', [center_x, center_y, 1000, 700]);
 
     subplot(3, 2, 1)
     plot(real(input_wave));
