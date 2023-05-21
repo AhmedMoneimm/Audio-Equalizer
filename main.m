@@ -1,22 +1,25 @@
 clc
-
+% Enter the audio file
 disp('Insert .wav file:');
 [baseName, folder] = uigetfile('*.wav');
 file = fullfile(folder, baseName);
 [x, fs] = audioread(file);
+fs = 2*fs + 1;
 
 choose = menu(strcat('Current FS = ',num2str(fs),'----','Want to change output sampling rate?'),'Yes','No','Double','half');
+fs_new = fs;
 if (choose == 1)
     fs_new = input('Enter the new output sampling rate:');
     x = resample(x, fs_new, fs);
-    fs = fs_new;
 elseif(choose == 3)
-    fs = 2*fs;
+    fs_new = 2*fs;
+    x = resample(x, fs_new, fs);
 elseif(choose == 4)
-    fs = fs/2;
+    fs_new = fs/2;
+    x = resample(x, fs_new, fs);
 end
 
-disp(fs);
+disp(fs_new);
 
 disp('Insert the gain for each of the following bandwidths in dB:');
 bands = {'FROM 0 TO 170 Hz', 'FROM 170 TO 300 Hz', 'FROM 300 TO 610 Hz', 'FROM 610 TO 1005 Hz', 'FROM 1.005 TO 3 KHz', 'FROM 3 TO 6 KHz', 'FROM 6 TO 12 KHz', 'FROM 12 TO 14 KHz', 'FROM 14 TO 20 KHz'};
@@ -39,7 +42,7 @@ freqRanges = {
     [14000, 20000]
 };
 
-filterType = menu('Choose filter', 'IIR', 'FIR');
+filterType = menu('Choose filter', 'FIR', 'IIR');
 
 for i = 1:9
     freqRange = freqRanges{i};
@@ -48,17 +51,17 @@ for i = 1:9
     
     if i == 1
         [b, a] = lowPassFilter(fs, 170, filterType);
+        filtered = filter(b, a, x);
         after_gain = power(10, gains(1)/20) * filtered;
-
     else
         [b, a] = bandPassFilter(fs, f_low, f_high, filterType);
     end
 
-    filtered = filter(b, a, x);
     band_gain = power(10, gains(i)/20) * filtered;
-    plotGainPhaseResponse(x, fs, f_low, f_high);
-    %plotFilterCharacteristics(b, a, [f_low, f_high], band_gain, fs, x);
     
+    plotBandpassFilterResponse(b, a, f_low, f_high, fs,filterType);
+    plotFilteredSignal(x, filtered, band_gain, f_low, f_high);
+
     after_gain = after_gain + band_gain;
 end
 
