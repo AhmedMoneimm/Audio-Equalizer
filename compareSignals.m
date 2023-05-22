@@ -8,7 +8,6 @@ function compareSignals(original, composite, fs)
     % time domain
     t = linspace(0, length(original)/fs, length(original));
 
-
     figure('Position', [0, 0, 1000, 700]);  % set the figure size
 
     % calculate the center position of the screen

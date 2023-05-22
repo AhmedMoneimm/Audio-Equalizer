@@ -50,16 +50,16 @@ for i = 1:9
     f_high = freqRange(2);
     
     if i == 1
-        [b, a] = lowPassFilter(fs_new, 170, filterType);
+        [b, a] = lowPassFilter(fs, 170, filterType);
     else
-        [b, a] = bandPassFilter(fs_new, f_low, f_high, filterType);
+        [b, a] = bandPassFilter(fs, f_low, f_high, filterType);
     end
     
     filtered = filter(b, a, x);
     band_gain = power(10, gains(i) / 20) * filtered;
     
     % plot graphs
-    plotBandpassFilterResponse(b, a, f_low, f_high, fs_new, filterType);
+    plotBandpassFilterResponse(b, a, f_low, f_high, fs, filterType);
     plotFilteredSignal(x, filtered, band_gain, f_low, f_high);
 
     after_gain = after_gain + band_gain;
@@ -68,3 +68,12 @@ end
 compareSignals(x, after_gain, fs_new);
 
 soundsc(after_gain, fs_new); % Use soundsc instead of sound to ensure proper scaling
+
+% Save the audio
+saveOption = menu('Do you want to save the audio?', 'Yes', 'No');
+if saveOption == 1
+    [saveName, saveFolder] = uiputfile('*.wav', 'Save Audio File');
+    saveFile = fullfile(saveFolder, saveName);
+    audiowrite(saveFile, after_gain, fs_new);
+    disp(['Audio saved as: ', saveFile]);
+end

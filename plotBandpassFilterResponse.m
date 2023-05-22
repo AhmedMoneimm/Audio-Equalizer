@@ -1,5 +1,5 @@
 function plotBandpassFilterResponse(b, a, f_low, f_high, fs, filter_type)
-    % create GainPhaseResponse folder if it not existed
+    % create GainPhaseResponse folder if it doesn't exist
     folder1 = 'GainPhaseResponse';
     if ~exist(folder1, 'dir')
         mkdir(folder1);
@@ -22,13 +22,10 @@ function plotBandpassFilterResponse(b, a, f_low, f_high, fs, filter_type)
     set(gcf, 'Position', [center_x, center_y, 1200, 700]);
 
     freqz(b, a, [], fs);
-    %xlim([f_low-500 f_high+500]);
     title(['Gain and Phase response of the ' num2str(f_low) ' - ' num2str(f_high) ' kHz band ' filter_type ' filter']);
     
     % save the figure in the GainPhaseResponse folder
     saveas(gcf, fullfile(folder1, ['GainPhaseResponse_' num2str(f_low) '_' num2str(f_high) '.png']));
-
-
 
     figure('Position', [0, 0, 1200, 700]);  % set the figure size
 
@@ -49,7 +46,8 @@ function plotBandpassFilterResponse(b, a, f_low, f_high, fs, filter_type)
     title(['Step response of the ' num2str(f_low) ' - ' num2str(f_high) ' kHz band filter']);
     
     subplot(3, 1, 3);
-    zplane(b, a); 
+    [z,p,k] = tf2zpk(b, a);
+    zplane(z, p); 
     title(['Zeros and Poles of the ' num2str(f_low) ' - ' num2str(f_high) ' kHz band filter']);
     
     % save fig in the FilterResponse folder
