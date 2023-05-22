@@ -1,6 +1,6 @@
-clc
+clear;clc;
 
-% Enter the audio file
+% enter audio file
 disp('Insert .wav file:');
 [baseName, folder] = uigetfile('*.wav');
 file = fullfile(folder, baseName);
@@ -56,7 +56,7 @@ for i = 1:9
     end
     
     filtered = filter(b, a, x);
-    band_gain = power(10, gains(i) / 20) * filtered;
+    band_gain = db2mag(gains(i)) * filtered;
     
     % plot graphs
     plotBandpassFilterResponse(b, a, f_low, f_high, fs, filterType);
@@ -69,7 +69,7 @@ compareSignals(x, after_gain, fs_new);
 
 soundsc(after_gain, fs_new); % Use soundsc instead of sound to ensure proper scaling
 
-% Save the audio
+% save audio
 saveOption = menu('Do you want to save the audio?', 'Yes', 'No');
 if saveOption == 1
     [saveName, saveFolder] = uiputfile('*.wav', 'Save Audio File');
