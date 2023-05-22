@@ -11,18 +11,18 @@ function plotBandpassFilterResponse(b, a, f_low, f_high, fs, filter_type)
         mkdir(folder2);
     end
     
-    figure('Position', [0, 0, 1000, 700]);  % set the figure size
+    figure('Position', [0, 0, 1200, 700]);  % set the figure size
 
     % calculate the center position of the screen
     screen_size = get(groot, 'ScreenSize');
-    center_x = (screen_size(3) - 1000) / 2;  % adjust fig width 
+    center_x = (screen_size(3) - 1200) / 2;  % adjust fig width 
     center_y = (screen_size(4) - 700) / 2;   % adjust fig height
     
     % set the figure position to the center
-    set(gcf, 'Position', [center_x, center_y, 1000, 700]);
+    set(gcf, 'Position', [center_x, center_y, 1200, 700]);
 
     freqz(b, a, [], fs);
-    xlim([f_low-500 f_high+500]);
+    %xlim([f_low-500 f_high+500]);
     title(['Gain and Phase response of the ' num2str(f_low) ' - ' num2str(f_high) ' kHz band ' filter_type ' filter']);
     
     % save the figure in the GainPhaseResponse folder
@@ -30,15 +30,15 @@ function plotBandpassFilterResponse(b, a, f_low, f_high, fs, filter_type)
 
 
 
-    figure('Position', [0, 0, 1000, 700]);  % set the figure size
+    figure('Position', [0, 0, 1200, 700]);  % set the figure size
 
     % calculate the center position of the screen
     screen_size = get(groot, 'ScreenSize');
-    center_x = (screen_size(3) - 1000) / 2;  % adjust fig width 
+    center_x = (screen_size(3) - 1200) / 2;  % adjust fig width 
     center_y = (screen_size(4) - 700) / 2;   % adjust fig height
     
     % set the figure position to the center
-    set(gcf, 'Position', [center_x, center_y, 1000, 700]);
+    set(gcf, 'Position', [center_x, center_y, 1200, 700]);
      
     subplot(3, 1, 1);
     impz(b, a); 
