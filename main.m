@@ -1,4 +1,5 @@
 clc
+
 % Enter the audio file
 disp('Insert .wav file:');
 [baseName, folder] = uigetfile('*.wav');
@@ -20,13 +21,12 @@ elseif (choose == 4)
     x = resample(x, fs_new, fs);
 end
 
-disp('Insert the gain for each of the following bandwidths in dB:');
 bands = {'FROM 0 TO 170 Hz', 'FROM 170 TO 300 Hz', 'FROM 300 TO 610 Hz', 'FROM 610 TO 1005 Hz', 'FROM 1.005 TO 3 KHz', 'FROM 3 TO 6 KHz', 'FROM 6 TO 12 KHz', 'FROM 12 TO 14 KHz', 'FROM 14 TO 20 KHz'};
 gains = zeros(1, 9);
 
 for i = 1:numel(bands)
-    disp([bands{i}, ':']);
-    gains(i) = input('');
+    answer = inputdlg(bands{i}, 'Enter gain in dB', [1 40]);
+    gains(i) = str2double(answer);
 end
 
 freqRanges = {
